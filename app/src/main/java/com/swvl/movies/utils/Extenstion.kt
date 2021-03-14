@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import com.swvl.movies.services.dataModels.movie.Movie
 
 fun Context.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
@@ -54,7 +55,7 @@ fun navigateActivityWithExtra(activityClass: Class<out Activity>, activity: Acti
         activity.finish()
 }
 
-fun navigateActivityWithExtra(activityClass: Class<out Activity>, activity: Activity, key: String, value: MovieItem, isFinish: Boolean){
+fun navigateActivityWithExtra(activityClass: Class<out Activity>, activity: Activity, key: String, value: Movie, isFinish: Boolean){
     val intent = Intent(activity, activityClass)
 //    intent.putExtra(key, value)
     activity.startActivity(intent)

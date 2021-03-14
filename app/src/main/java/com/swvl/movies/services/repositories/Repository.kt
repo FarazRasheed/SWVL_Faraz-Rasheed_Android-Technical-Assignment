@@ -5,7 +5,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class Repository @Inject constructor(private val networkService: NetworkService) {
-    suspend fun getList(): Response<Movie> {
+    suspend fun getList(): Response<Any> {
         return networkService.getList()
     }
 }

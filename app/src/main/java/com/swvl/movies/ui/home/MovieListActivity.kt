@@ -2,6 +2,8 @@ package com.swvl.movies.ui.home
 
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.lifecycle.observe
 import com.swvl.movies.R
 import com.swvl.movies.databinding.ActivityMovieListBinding
@@ -38,10 +40,25 @@ class MovieListActivity : BaseActivity<ActivityMovieListBinding, MoviesViewModel
 
     private fun setListeners() {
         moviesData = GetLocalJson.getLocalData("movies.json", this)
+        if (!moviesData.movies.isNullOrEmpty()) {
+            adapter.updateList(moviesData.movies)
+        } else {
+            showSnackBar(rootView, getString(R.string.no_data))
+        }
+
+        etSearch.setOnEditorActionListener(TextView.OnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // Your action on done
+                hideKeyboard()
+                adapter.filter(v.text.toString())
+
+                true
+            } else false
+        })
         when {
             Validation.isConnected(this) -> {
-                viewModel.getList()
-                setObservables()
+//                viewModel.getList()
+//                setObservables()
             }
         }
     }

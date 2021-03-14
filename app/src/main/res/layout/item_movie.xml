@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="unit"
-            type="com.swvl.movies.services.dataModels.movie.MovieItem" />
+            type="com.swvl.movies.services.dataModels.movie.Movie" />
+
         <variable
             name="listener"
             type="android.view.View.OnClickListener" />
@@ -14,31 +16,46 @@
     <androidx.cardview.widget.CardView
         android:layout_width="@dimen/_145sdp"
         android:layout_height="@dimen/_200sdp"
+        android:layout_margin="@dimen/_5sdp"
         android:clickable="true"
         android:focusable="true"
+        android:onClick="@{listener}"
         app:cardCornerRadius="@dimen/_8sdp"
-        app:cardElevation="@dimen/_2dp"
-        android:layout_margin="@dimen/_5sdp"
-        android:onClick="@{listener}">
+        app:cardElevation="@dimen/_2dp">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:onClick="@{listener}">
+
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivMedia"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:scaleType="fitXY"
                 android:onClick="@{listener}"
-                app:loadImage="@{unit.keyArtImages.get(0).url}"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:id="@+id/ivMedia"/>
+                app:layout_constraintTop_toTopOf="parent" />
+            <!--            app:loadImage="@{unit.keyArtImages.get(0).url}"-->
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_30sdp"
+                android:fontFamily="@font/gssm_bold"
+                android:gravity="start"
+                android:textColor="@color/colorText"
+                android:textSize="@dimen/_10sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:text="@{unit.title}"/>
+            <!--            >-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/color80000000"/>
+                android:background="@color/color80000000" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

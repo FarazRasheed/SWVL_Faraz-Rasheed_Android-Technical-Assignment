@@ -10,11 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.*
 import com.swvl.movies.R
 import com.swvl.movies.databinding.ItemMovieBinding
+import com.swvl.movies.services.dataModels.movie.Movie
 import com.swvl.movies.utils.navigateActivity
 
 open class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-    var list: List<Any> = arrayListOf()
+    var list: ArrayList<Movie> = arrayListOf()
+    var itemsCopy: ArrayList<Movie> = arrayListOf()
 
     override fun getItemCount(): Int {
         return list.size
@@ -38,7 +40,7 @@ open class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
         }
     }
 
-    private fun clickListener(item: Any): View.OnClickListener {
+    private fun clickListener(item: Movie): View.OnClickListener {
         return View.OnClickListener {
             movieItem = item
            navigateActivity(MovieDetailActivity::class.java, context as Activity, false)
@@ -46,26 +48,47 @@ open class MoviesAdapter: RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(private val binding: ItemMovieBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Any, clickListener: View.OnClickListener) {
+        fun bind(item: Movie, clickListener: View.OnClickListener) {
             with(binding) {
                 try {
-//                    unit = item
-//                    listener = clickListener
+                    unit = item
+                    listener = clickListener
                     executePendingBindings()
                 } catch (ex: Exception) {
-                    Log.e("ASSESSMENT_LIST_ERROR","$ex")
+                    Log.e("ASSESSMENT_LIST_ERROR", "$ex")
                 }
             }
         }
     }
 
-    fun updateList(newList: ArrayList<Any>) {
-        (list as ArrayList).clear()
-        (list as ArrayList).addAll(newList)
+    fun updateList(newList: ArrayList<Movie>) {
+        list.clear()
+        itemsCopy.clear()
+        list.addAll(newList)
+        itemsCopy.addAll(newList)
+
         notifyDataSetChanged()
     }
 
     companion object{
-        lateinit var movieItem: Any
+        lateinit var movieItem: Movie
+    }
+
+    open fun filter(text: String) {
+        var text = text
+        list.clear()
+        if (text.isEmpty()) {
+            list.addAll(itemsCopy)
+        } else {
+            text = text.toLowerCase()
+            for (item in itemsCopy) {
+                if (item.title.toLowerCase().contains(text) || item.year.toLowerCase()
+                        .contains(text)
+                ) {
+                    list.add(item)
+                }
+            }
+        }
+        notifyDataSetChanged()
     }
 }
