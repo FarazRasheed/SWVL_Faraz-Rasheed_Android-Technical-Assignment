@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Movies</string>
+
+    <string name="internet_not_connected">Internet not connected.</string>
+    <string name="movies">Movie List</string>
+    <string name="no_data">Data Not Found!</string>
+    <string name="cast">Cast &amp; Crew</string>
+    <string name="window">Window</string>
+    <string name="directors">Directors</string>
+    <string name="ok">OK</string>
+
+
+</resources>
