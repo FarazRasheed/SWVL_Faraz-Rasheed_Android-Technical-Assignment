@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.lifecycle.observe
 import com.swvl.movies.R
 import com.swvl.movies.databinding.ActivityMovieListBinding
+import com.swvl.movies.services.dataModels.movie.MoviesDTO
 import com.swvl.movies.ui.base.BaseActivity
+import com.swvl.movies.utils.GetLocalJson
 import com.swvl.movies.utils.ProgressHUD
 import com.swvl.movies.utils.Validation
 import com.swvl.movies.utils.showSnackBar
@@ -23,6 +25,7 @@ class MovieListActivity : BaseActivity<ActivityMovieListBinding, MoviesViewModel
     @Inject
     lateinit var adapter: MoviesAdapter
 
+    lateinit var moviesData: MoviesDTO
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initViews()
@@ -34,6 +37,7 @@ class MovieListActivity : BaseActivity<ActivityMovieListBinding, MoviesViewModel
     }
 
     private fun setListeners() {
+        moviesData = GetLocalJson.getLocalData("movies.json", this)
         when {
             Validation.isConnected(this) -> {
                 viewModel.getList()
