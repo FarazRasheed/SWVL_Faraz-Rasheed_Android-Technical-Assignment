@@ -34,7 +34,7 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding, MoviesViewM
 
     private fun initViews() {
         movieItem = MoviesAdapter.movieItem
-//        binding.unit = Movie
+        binding.unit = Movie
         findGenres()
 
     }
