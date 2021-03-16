@@ -9,5 +9,6 @@ data class Movie(
     val genres: List<String>,
     val rating: Int,
     val title: String,
+    var imageUrl: String = "",
     val year: String
 ): Parcelable

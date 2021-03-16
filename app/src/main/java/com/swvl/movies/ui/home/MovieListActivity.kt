@@ -8,6 +8,7 @@ import androidx.lifecycle.observe
 import com.swvl.movies.R
 import com.swvl.movies.databinding.ActivityMovieListBinding
 import com.swvl.movies.services.dataModels.movie.MoviesDTO
+import com.swvl.movies.services.dataModels.picture.PhotoDTO
 import com.swvl.movies.ui.base.BaseActivity
 import com.swvl.movies.utils.GetLocalJson
 import com.swvl.movies.utils.ProgressHUD
@@ -55,32 +56,6 @@ class MovieListActivity : BaseActivity<ActivityMovieListBinding, MoviesViewModel
                 true
             } else false
         })
-        when {
-            Validation.isConnected(this) -> {
-//                viewModel.getList()
-//                setObservables()
-            }
-        }
     }
 
-    private fun setObservables() {
-        viewModel.getListResponse().observe(this) {
-            when (it) {
-                is String -> {
-                    showSnackBar(rootView, it)
-                }
-
-            }
-        }
-
-
-
-        viewModel.isLoading.observe(this) {
-            try {
-                if (it) showLoader(this.progressHUD) else hideLoader(this.progressHUD)
-            } catch (e: Exception) {
-                Log.e("error:", e.toString() + "")
-            }
-        }
-    }
 }

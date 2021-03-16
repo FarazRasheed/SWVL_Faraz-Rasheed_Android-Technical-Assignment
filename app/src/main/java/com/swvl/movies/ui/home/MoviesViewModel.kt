@@ -21,12 +21,12 @@ class MoviesViewModel @Inject constructor() : BaseViewModel() {
 
   fun getListResponse(): LiveData<Any> = getListResponse
 
-  fun getList() {
+  fun getList(text: String) {
     isLoading.postValue(true)
     viewModelScope.launch(Dispatchers.IO) {
 
       runCatching {
-        repository.getList()
+        repository.getList(text)
 
       }.onSuccess {
         isLoading.postValue(false)

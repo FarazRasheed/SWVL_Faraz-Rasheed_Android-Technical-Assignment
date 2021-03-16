@@ -36,9 +36,7 @@
                 android:layout_height="@dimen/_300sdp"
                 app:layout_constraintTop_toTopOf="parent"
                 android:scaleType="centerCrop"
-
                 android:id="@+id/ivMedia"/>
-<!--            app:loadImage="@{unit.cardImages.get(0).url}"-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_300sdp"
@@ -51,11 +49,10 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:onClick="playVideo"
                 android:layout_marginTop="@dimen/_125sdp"/>
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_200sdp"
+                android:layout_height="@dimen/_100sdp"
                 android:clickable="true"
                 android:focusable="true"
                 app:cardCornerRadius="@dimen/_15sdp"
@@ -124,19 +121,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvName"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{unit.synopsis}"
-                        android:textColor="@color/colorText"
-                        android:textSize="@dimen/_10sdp"
-                        android:fontFamily="@font/gssm_light"
-                        android:id="@+id/tvDec"
-                        android:maxLines="9"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTime"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
             <TextView
@@ -176,36 +160,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvCast"
                 android:layout_marginTop="@dimen/_15sdp"
                 android:id="@+id/line1"/>
-            <TextView
-                android:id="@+id/tvLabelDirectors"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:text="@string/directors"
-                android:textAllCaps="false"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/_15sdp"
-                android:fontFamily="@font/gssm_bold"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/line1" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@{directer}"
-                android:textColor="@color/colorText"
-                android:textSize="@dimen/_11sdp"
-                android:fontFamily="@font/gssm_medium"
-                android:id="@+id/tvDirectors"
-                android:gravity="start"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@+id/tvLabelDirectors"
-                app:layout_constraintTop_toBottomOf="@+id/tvLabelDirectors"/>
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

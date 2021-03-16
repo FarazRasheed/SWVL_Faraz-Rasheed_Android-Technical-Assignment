@@ -3,12 +3,18 @@ package com.swvl.movies.ui.home
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.observe
 import com.swvl.movies.R
 import com.swvl.movies.databinding.ActivityMovieDetailBinding
 import com.swvl.movies.services.dataModels.movie.Movie
+import com.swvl.movies.services.dataModels.movie.MoviesDTO
+import com.swvl.movies.services.dataModels.picture.PhotoDTO
 import com.swvl.movies.ui.base.BaseActivity
-import com.swvl.movies.utils.ProgressHUD
+import com.swvl.movies.utils.*
+import kotlinx.android.synthetic.main.activity_movie_detail.*
+import kotlinx.android.synthetic.main.activity_movie_list.*
 import javax.inject.Inject
 
 
@@ -24,7 +30,6 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding, MoviesViewM
     override fun layoutId(): Int = R.layout.activity_movie_detail
     private var genreData: StringBuilder? = StringBuilder()
     private var castData: StringBuilder? = StringBuilder()
-    var directorsData: StringBuilder? = StringBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,30 +39,52 @@ class MovieDetailActivity : BaseActivity<ActivityMovieDetailBinding, MoviesViewM
 
     private fun initViews() {
         movieItem = MoviesAdapter.movieItem
-        binding.unit = Movie
+        binding.unit = movieItem
         findGenres()
-
+        setObservables()
+        when {
+            Validation.isConnected(this) -> {
+                viewModel.getList(movieItem.title)
+            }
+        }
     }
 
     private fun findGenres() {
         movieItem.genres.forEach { i ->
             genreData?.append(" | $i")
         }
-//        movieItem.cast.forEach { cast ->
-//            castData?.append(" | ${cast.name}")
-//        }
-//        movieItem.directors.forEach { director ->
-//            directorsData?.append(" | ${director.name}")
-//        }
-//        binding.genres = genreData.toString()
-//        binding.cast = castData.toString().substring(3)
-//        binding.directer = directorsData.toString().substring(3)
+        movieItem.cast.forEach { cast ->
+            castData?.append(" | ${cast}")
+        }
+        binding.genres = genreData.toString()
+        binding.cast = castData.toString().substring(3)
     }
 
-    fun playVideo(view: View){
-//        if (movieItem.videos.isNotEmpty()){
-//            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(movieItem.videos[0].url))
-//            startActivity(browserIntent)
-//        }
+    private fun setObservables() {
+        viewModel.getListResponse().observe(this) {
+            when (it) {
+                is String -> {
+                    showSnackBar(rootView, it)
+                }
+
+                is PhotoDTO -> {
+                    val moviesData: PhotoDTO = it as PhotoDTO
+                    if (!moviesData.photos.photo.isNullOrEmpty()){
+                        val url: String = "https://live.staticflickr.com/"+moviesData.photos.photo[0].server+"/"+moviesData.photos.photo[0].id+"_"+moviesData.photos.photo[0].secret+"_q.jpg"
+                        movieItem.imageUrl = url
+                        ImageLoader.setImageResource(this, url, binding.ivMedia)
+                    }
+                }
+            }
+        }
+
+
+        viewModel.isLoading.observe(this) {
+            try {
+                if (it) showLoader(this.progressHUD) else hideLoader(this.progressHUD)
+            } catch (e: Exception) {
+                Log.e("error:", e.toString() + "")
+            }
+        }
     }
 }
